@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Attendance App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+<div class="academy-header">
+
+  <h1 class="academy-title">AL RAZI ACADEMY</h1>
+
+  <p class="academy-tagline">Excellence lies in determination</p>
+  <p class="academy-address">122-Fazal Block, Ittefaq Town, Mansoorah, Multan Road, Lahore.</p>
+
+  <h2 class="attendance-title">DAILY ATTENDANCE SHEET</h2>
+</div>
+
+
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span class="brand-text">Attendance System</span>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2 class="card-title">Session Details</h2>
+        <div class="grid-2">
+          <div class="field">
+            <label for="date">Select Date</label>
+            <input id="date" type="date" />
+          </div>
+
+          <div class="field">
+            <label for="classSelect">Select Class</label>
+            <select id="classSelect">
+              <option value="">-- Choose class --</option>
+              <option value="9th">9th</option>
+              <option value="10th">10th</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Students</h2>
+            <p class="card-subtitle" id="classInfo">Choose a class to load students</p>
+          </div>
+          <div class="pill">
+            <span id="presentCount">Present: 0</span>
+          </div>
+        </div>
+
+        <div id="studentsList" class="students empty-state">
+          <p>No class selected yet.</p>
+        </div>
+
+        <div class="buttons toolbar">
+          <button id="markAllPresent" class="btn ghost">Mark All Present</button>
+          <button id="markAllAbsent" class="btn ghost danger">Mark All Absent</button>
+          <button id="submitBtn" class="btn primary">Submit Attendance</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal for timer -->
+  <div id="modalBack" class="modal-back">
+    <div class="modal">
+      <h3>Confirm Attendance</h3>
+      <p>If this was a <b>junk / wrong attendance</b>, you can cancel now.</p>
+      <p class="countdown-label">Auto-saving in:</p>
+      <h2 id="countdown">7</h2>
+      <div class="buttons modal-actions">
+        <button id="cancelSave" class="btn outline danger">Cancel</button>
+        <button id="forceSave" class="btn primary">Save Now</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
