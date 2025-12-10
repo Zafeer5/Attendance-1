@@ -1,9 +1,12 @@
-// ====== CONFIG: PUT YOUR SUPABASE DETAILS HERE ======
+// ====== CONFIG: SUPABASE DETAILS ======
 const SUPABASE_URL = "https://tnzfjnhsonnawkxjqlhq.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRuemZqbmhzb25uYXdreGpxbGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMzM1MDUsImV4cCI6MjA4MDkwOTUwNX0.Z1ZVdpca64Qcj6uNnsirjkscRCUiQgpKk7t8ONF1ZLE";
-const SUPABASE_TABLE = "attendance";
-// ===================================================
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRuemZqbmhzb25uYXdreGpxbGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMzM1MDUsImV4cCI6MjA4MDkwOTUwNX0.Z1ZVdpca64Qcj6uNnsirjkscRCUiQgpKk7t8ONF1ZLE";
 
+const SUPABASE_TABLE = "attendance";
+// ======================================
+
+// Element references
 const classSelect = document.getElementById("classSelect");
 const studentsList = document.getElementById("studentsList");
 const presentCount = document.getElementById("presentCount");
@@ -22,69 +25,24 @@ const dateInput = document.getElementById("date");
 // set today's date
 dateInput.valueAsDate = new Date();
 
-// updated students data
+// STUDENT DATA
 const studentsData = {
     "9th": [
-        "Memoona Naz",
-        "Maheen Usman",
-        "Maleeha",
-        "Fariha Parvaiz",
-        "Ayesha Iman",
-        "Aleeza Waheed",
-        "Sania",
-        "Bisma Parvaiz",
-        "Kahaful-Wara",
-        "Munifa",
-        "Tanisha",
-        "Muqaddas",
-        "Iram",
-        "Maryam",
-        "M. Rayyan",
-        "Asad Ameen",
-        "Anas Saleem",
-        "Hamza Shakeel",
-        "Hamza Shahzad",
-        "Ali Hassan",
-        "Rehan Aslam",
-        "M. Faizan",
-        "Subhan Yaqoob",
-        "Asif Jahangir",
-        "Yousaf Jahangir",
-        "Farhan Mirza",
-        "Daniyal Khokhar",
-        "Haroon",
-        "Mohsin",
-        "Nadeen Ahmed",
-        "Salman Abbasi",
-        "Hadi",
-        "Faizan",
-        "Tahir",
-        "Hanan Shah",
-        "Ayyan"
+        "Memoona Naz", "Maheen Usman", "Maleeha", "Fariha Parvaiz", "Ayesha Iman",
+        "Aleeza Waheed", "Sania", "Bisma Parvaiz", "Kahaful-Wara", "Munifa",
+        "Tanisha", "Muqaddas", "Iram", "Maryam", "M. Rayyan", "Asad Ameen",
+        "Anas Saleem", "Hamza Shakeel", "Hamza Shahzad", "Ali Hassan",
+        "Rehan Aslam", "M. Faizan", "Subhan Yaqoob", "Asif Jahangir",
+        "Yousaf Jahangir", "Farhan Mirza", "Daniyal Khokhar", "Haroon",
+        "Mohsin", "Nadeen Ahmed", "Salman Abbasi", "Hadi", "Faizan",
+        "Tahir", "Hanan Shah", "Ayyan"
     ],
     "10th": [
-        "Munazza",
-        "Sania",
-        "Dua",
-        "Laiba Batool",
-        "Amna Zahid",
-        "Maham Maqsood",
-        "Hira Saeed",
-        "Zimmal",
-        "Amna Batool",
-        "Areeba",
-        "Iqra waheed",
-        "Iqra Umer farooq",
-        "Maham Ashfaq",
-        "Arman Raiz",
-        "Sahil",
-        "Samiullah",
-        "Talha",
-        "Tayyab",
-        "Hammad Amanat",
-        "Majid sandhu",
-        "Jahanzaib",
-        "Moeed"
+        "Munazza", "Sania", "Dua", "Laiba Batool", "Amna Zahid",
+        "Maham Maqsood", "Hira Saeed", "Zimmal", "Amna Batool",
+        "Areeba", "Iqra waheed", "Iqra Umer farooq", "Maham Ashfaq",
+        "Arman Raiz", "Sahil", "Samiullah", "Talha", "Tayyab",
+        "Hammad Amanat", "Majid sandhu", "Jahanzaib", "Moeed"
     ]
 };
 
@@ -92,38 +50,39 @@ let attendance = [];
 let countdown = null;
 let timeout = null;
 
-// Load students on class change
+// Load students when class changes
 classSelect.addEventListener("change", () => {
     const cls = classSelect.value;
     loadStudents(cls);
 });
 
+// LOAD STUDENTS WITH ROLL NUMBERS
 function loadStudents(cls) {
-  studentsList.innerHTML = "";
-  attendance = [];
+    studentsList.innerHTML = "";
+    attendance = [];
 
-  if (!studentsData[cls]) {
-    studentsList.classList.add("empty-state");
-    studentsList.innerHTML = "<p>No class selected yet.</p>";
-    presentCount.textContent = "Present: 0";
-    classInfo.textContent = "Choose a class to load students";
-    return;
-  }
+    if (!studentsData[cls]) {
+        studentsList.classList.add("empty-state");
+        studentsList.innerHTML = "<p>No class selected yet.</p>";
+        presentCount.textContent = "Present: 0";
+        classInfo.textContent = "Choose a class to load students";
+        return;
+    }
 
-  studentsList.classList.remove("empty-state");
+    studentsList.classList.remove("empty-state");
 
-  // Assign starting roll numbers
-  let startRoll = cls === "9th" ? 901 : 1001;
+    // Starting roll numbers
+    let startRoll = cls === "9th" ? 901 : 1001;
 
-  classInfo.textContent = `Loaded ${studentsData[cls].length} students for class ${cls}.`;
+    classInfo.textContent = `Loaded ${studentsData[cls].length} students for class ${cls}.`;
 
-  studentsData[cls].forEach((name, index) => {
-    const rollNumber = startRoll + index;
+    studentsData[cls].forEach((name, index) => {
+        const rollNumber = startRoll + index;
 
-    const row = document.createElement("div");
-    row.className = "student-row";
+        const row = document.createElement("div");
+        row.className = "student-row";
 
-    row.innerHTML = `
+        row.innerHTML = `
       <span class="roll-number">${rollNumber}</span>
       <span class="student-name">${name}</span>
       <div class="student-row-actions">
@@ -132,32 +91,32 @@ function loadStudents(cls) {
       </div>
     `;
 
-    studentsList.appendChild(row);
+        studentsList.appendChild(row);
 
-    attendance.push({
-      roll: rollNumber,
-      name,
-      status: "none"
+        attendance.push({
+            roll: rollNumber,
+            name,
+            status: "none"
+        });
+
+        const pBtn = row.querySelector('[data-type="p"]');
+        const aBtn = row.querySelector('[data-type="a"]');
+
+        pBtn.onclick = () => setStatus(name, "present", pBtn, aBtn);
+        aBtn.onclick = () => setStatus(name, "absent", pBtn, aBtn);
     });
 
-    const pBtn = row.querySelector('[data-type="p"]');
-    const aBtn = row.querySelector('[data-type="a"]');
-
-    pBtn.onclick = () => setStatus(name, "present", pBtn, aBtn);
-    aBtn.onclick = () => setStatus(name, "absent", pBtn, aBtn);
-  });
-
-  updatePresentCount();
+    updatePresentCount();
 }
 
-
+// SET STATUS (PRESENT / ABSENT)
 function setStatus(name, status, pBtn, aBtn) {
     const student = attendance.find((s) => s.name === name);
     if (!student) return;
 
     student.status = status;
 
-    // reset both
+    // Reset styling
     pBtn.classList.remove("btn-p", "btn-neutral");
     aBtn.classList.remove("btn-a", "btn-neutral");
 
@@ -165,11 +124,9 @@ function setStatus(name, status, pBtn, aBtn) {
     aBtn.classList.add("btn-neutral");
 
     if (status === "present") {
-        pBtn.classList.remove("btn-neutral");
-        pBtn.classList.add("btn-p");
-    } else if (status === "absent") {
-        aBtn.classList.remove("btn-neutral");
-        aBtn.classList.add("btn-a");
+        pBtn.classList.replace("btn-neutral", "btn-p");
+    } else {
+        aBtn.classList.replace("btn-neutral", "btn-a");
     }
 
     updatePresentCount();
@@ -180,8 +137,7 @@ function updatePresentCount() {
     presentCount.textContent = `Present: ${count}`;
 }
 
-// Mark all helpers
-
+// MARK ALL PRESENT
 markAllPresent.onclick = () => {
     document.querySelectorAll(".student-row").forEach((row) => {
         const name = row.querySelector(".student-name").textContent.trim();
@@ -191,6 +147,7 @@ markAllPresent.onclick = () => {
     });
 };
 
+// MARK ALL ABSENT
 markAllAbsent.onclick = () => {
     document.querySelectorAll(".student-row").forEach((row) => {
         const name = row.querySelector(".student-name").textContent.trim();
@@ -200,16 +157,16 @@ markAllAbsent.onclick = () => {
     });
 };
 
-// Submit logic with modal timer
+// SUBMIT WITH TIMER
 submitBtn.onclick = () => {
-    if (!classSelect.value) return alert("Please select a class first.");
-    if (!dateInput.value) return alert("Please select a date.");
+    if (!classSelect.value) return alert("Select a class first.");
+    if (!dateInput.value) return alert("Select a date.");
     if (!attendance.length) return alert("No students loaded.");
 
     const unmarked = attendance.filter((s) => s.status === "none").length;
     if (unmarked > 0) {
         const proceed = confirm(
-            `There are ${unmarked} students without a status.\n\nDo you still want to submit?`
+            `${unmarked} students have no status.\nSubmit anyway?`
         );
         if (!proceed) return;
     }
@@ -244,12 +201,13 @@ forceSave.onclick = () => {
     saveAttendance();
 };
 
-// Save to Supabase
+// SAVE TO SUPABASE
 async function saveAttendance() {
     const cls = classSelect.value;
     const dateValue = dateInput.value;
 
-    const recordsToSave = attendance.map((s) => ({
+    const payload = attendance.map((s) => ({
+        roll: s.roll,
         date: dateValue,
         class: cls,
         student_name: s.name,
@@ -257,7 +215,7 @@ async function saveAttendance() {
     }));
 
     try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`, {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -265,17 +223,16 @@ async function saveAttendance() {
                 Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
                 Prefer: "return=minimal"
             },
-            body: JSON.stringify(recordsToSave)
+            body: JSON.stringify(payload)
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(errorText);
-            alert("❌ Failed to save attendance. Check console for details.");
+        if (!res.ok) {
+            console.error(await res.text());
+            alert("❌ Failed to save — check console.");
             return;
         }
 
-        alert("✅ Attendance saved to Supabase successfully.");
+        alert("✅ Attendance saved successfully!");
     } catch (err) {
         console.error(err);
         alert("❌ Network error: " + err.message);
