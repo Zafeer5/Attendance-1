@@ -34,7 +34,7 @@ const studentsData = {
         "Anas Saleem", "Hamza Shakeel", "Hamza Shahzad", "Ali Hassan",
         "Rehan Aslam", "M. Faizan", "Subhan Yaqoob", "Asif Jahangir",
         "Yousaf Jahangir", "Farhan Mirza", "Daniyal Khokhar", "Haroon",
-        "Mohsin", "Nadeen Ahmed", "Salman Abbasi", "Hadi", "Faizan",
+        "Mohsin", "Nadeem Ahmed", "Salman Abbasi", "Hadi", "Faizan",
         "Tahir", "Hanan Shah", "Ayyan"
     ],
     "10th": [
@@ -238,3 +238,4 @@ async function saveAttendance() {
         alert("❌ Network error: " + err.message);
     }
 }
+
